@@ -82,8 +82,8 @@ function App() {
 
   return (
     <div className="App" style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>496</h1>
-      <h1>Walkie Talkie App</h1>
+      <h1>Talkie Gen Z</h1>
+      <h1></h1>
       <div style={{ marginBottom: "20px" }}>
         <Switch
           onChange={handleFriendSwitchChange}
