@@ -1,11 +1,12 @@
 // App.js
-import { useState, useEffect, createRef } from "react";
+import React, { useState, useEffect, createRef } from "react";
 import Switch from "react-switch";
 import walkieTalkieSound from "./walkie_talkie_beep.mp3";
-import onLogo from "./of.png"; // Import the on.png image
-import offLogo from "./on.png"; // Import the off.png image
-import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import onLogo from "./of.png";
+import offLogo from "./on.png";
+import { Auth0Provider, useAuth0 } from '@auth0/auth0-react'; // Import Auth0Provider and useAuth0
 
+// Functional component for the talk button
 const TalkButton = ({ isTalking, onMouseDown, onMouseUp, onTouchStart, onTouchEnd }) => (
   <button
     onMouseDown={onMouseDown}
@@ -52,22 +53,29 @@ const TalkButton = ({ isTalking, onMouseDown, onMouseUp, onTouchStart, onTouchEn
   </button>
 );
 
+// Main App component
 function App() {
+  const { user, loginWithRedirect } = useAuth0(); // Destructure user and loginWithRedirect from useAuth0 hook
+  console.log("Current User", user);
+
   const [isTalking, setIsTalking] = useState(false);
   const [friendSwitch, setFriendSwitch] = useState(false);
   const audioRef = createRef();
 
+  // Handler for starting the push-to-talk functionality
   const handlePushToTalk = () => {
     setIsTalking(true);
     audioRef.current.play();
     // Additional logic for audio recording and transmission
   };
 
+  // Handler for releasing the push-to-talk functionality
   const handleReleaseTalk = () => {
     setIsTalking(false);
     // Additional logic to stop audio recording and transmission
   };
 
+  // Handler for changing the friend switch
   const handleFriendSwitchChange = (checked) => {
     setFriendSwitch(checked);
     // Additional logic for switching between friends
@@ -83,7 +91,6 @@ function App() {
   return (
     <div className="App" style={{ textAlign: "center", marginTop: "50px" }}>
       <h1>Talkie Gen Z</h1>
-      <h1></h1>
       <div style={{ marginBottom: "20px" }}>
         <Switch
           onChange={handleFriendSwitchChange}
@@ -105,17 +112,7 @@ function App() {
         onTouchEnd={handleReleaseTalk}
       />
       <audio ref={audioRef} src={walkieTalkieSound} />
-
-      <GoogleOAuthProvider clientId="55412693328-17la8e9csd5v40kpq8e83s26kg9k3dif.apps.googleusercontent.com">
-        <GoogleLogin
-          onSuccess={credentialResponse => {
-            console.log(credentialResponse);
-          }}
-          onError={() => {
-            console.log('Login Failed');
-          }}
-        />
-      </GoogleOAuthProvider>
+      <button onClick={(e) => loginWithRedirect()}>Login</button>
     </div>
   );
 }
