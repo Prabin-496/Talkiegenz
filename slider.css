@@ -1,0 +1,30 @@
+.container {
+    width: 500px;
+    height: 200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+  }
+  
+  .slider-wrapper {
+    width: 45%;
+    height: 5%;
+    position: relative;
+  }
+  
+  .tranding-slide-img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .tranding-slide-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
